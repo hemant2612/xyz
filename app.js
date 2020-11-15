@@ -141,7 +141,7 @@ app.use('/travel', pages);
 app.use('/cart',addCart);
 app.use('/users',Users);
 app.use('/admin/products', adminProducts);
-app.use('/products',Products);
+app.use('/products',Products); 
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
