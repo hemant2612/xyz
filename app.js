@@ -137,7 +137,7 @@ const adminPages = require('./routes/adminpages.js');
 const adminProducts = require('./routes/adminProducts.js');
 
 app.use('/admin/pages', adminPages);
-app.use('/travel', pages);
+app.use('/', pages);
 app.use('/cart',addCart);
 app.use('/users',Users);
 app.use('/admin/products', adminProducts);
