@@ -1,0 +1,78 @@
+<html>
+
+<head>
+    <title><%=title%></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.css" /> -->
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="/bootstrap/css/font-awesome-5.8.1.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/bootstrap/css/mdb.css">
+    <link rel="stylesheet" href="/bootstrap/css/style2.css">
+</head>
+
+<body>
+    <div class="ajaxbg">
+        <div class="ajaxinner">
+            <h3>youare now redirect to paypal.....</h3> 
+            <img src="/images/download.png" alt="">
+        </div>
+    </div>
+    
+    <nav class="navbar navbar-expand-sm navbar-dark bg-teal">
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <i class="fa fa-plane-departure"></i> Tour and Travel</a>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#travel-navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="travel-navbar">
+                <ul class="navbar-nav ml-auto nav-left">
+                    <%pages.forEach(function(page){%>
+                    <%if(page.slug == "home"){%>
+                    <li class="nav-item px-3"><a class="nav-link" href="/products"><%=page.title%></a></li>
+                    <%}else{%>
+
+                    <li class="nav-item px-3"><a class="nav-link" href="/<%=page.slug%>"><%=page.title%></a></li>
+                    <%}%>
+                        <%})%>
+                    
+                </ul>
+                <ul class="navbar-nav ml-auto nav-right" id="travel-navbar">
+                    <li class="nav-item px-3">
+                        <a class="nav-link" href="/cart/checkout">My cart(
+                            <%if(typeof cart !== "undefined"){%>
+                            <%=cart.length%>
+                            <%}else{%>
+                            0
+                            <%}%>)
+                            </a>
+                        </li>
+                        <%if(user){%>
+                    <li class="nav-item px-3"><a class="nav-link" href="/users/logout">Hi, <%=user.username%> (logout)</a></li>
+                    <%}else{%>
+                    <li class="nav-item px-3"><a class="nav-link" href="/users/register">Register</a></li>
+                    <li class="nav-item px-3"><a class="nav-link" href="/users/login">Login</a></li>
+                    <%}%>
+                            <%if(user && user.admin==1){%>
+                    <li class="nav-item px-3"><a class="nav-link" href="/admin/pages">Admin area</a></li>
+                    <%}%>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+</body>
+
+</html>
+<%- messages('messages', locals) %>
+<%if(errors){%>
+    <%errors.forEach(function(error){ %>
+        <div class="alert alert-danger">
+            <%=error.msg%>
+        </div>
+    <%});%>
+<%}%>

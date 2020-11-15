@@ -1,0 +1,101 @@
+<%- include ('../layouts/adminheader') -%>
+<h2 class="page-title">EDIT a Product</h2>
+<a href="/admin/products">Back to all product</a>
+<br><br>
+<form action="/admin/products/update-edit-product/<%=id%>" enctype="multipart/form-data" method="POST">
+    <input type="hidden" name="slug">
+    <div class="form-group">
+        <label for="">Title</label>
+        <input type="text" class="form-control" name="title" value="<%=title%>" placeholder="title">
+
+    </div>
+
+    <div class="form-group">
+        <label for="">Price</label>
+        <input type="text" class="form-control" name="price" value="<%=price%>" placeholder="Price">
+
+
+    </div>
+
+    <div class="form-group">
+        <label for="">Description</label>
+        <textarea name="desc" class="form-control" id="" cols="20" rows="5"
+            placeholder="Description"><%=desc%></textarea>
+
+    </div>
+
+    <div class="form-group">
+        <label for="">Current Image</label>
+        <p>
+            <%if(image == ""){%>
+            <img src="/images/blank.png" width="80px" height="50px">
+            <%} else {%>
+            <img src="/products_image/<%= id %>/<%= image %>" width="80px" height="50px">
+            <%}%>
+        </p>
+        
+        
+    </div>
+
+    <div class="form-group">
+        <label for=""> Upload Image</label>
+        <input type="file" class="form-control" name="image" id="img"  onchange="loadFile(event)" >
+        <img  id="imgPreview" width="150" height="100">
+        
+    </div>
+
+    <br>
+    <input type="hidden" name="pimage" value="<%=image%>">
+            <button>submit</button>
+</form>
+<hr>
+<h3 class="page-header">Gallery</h3>
+<ul class="gallery">
+    <%galleryImages.forEach(function(image){%>
+    <%if(image!="thumbs"){%>
+    <li>
+        <img src="/products_image/<%= id %>/gallery/thumbs/<%= image %>">&nbsp;
+        <a href="/admin/products/delete-image/<%=image%>?id=<%=id%>" class="confirmDeletion"
+            onclick="if (! confirm('Are you confirm to delete gallery page?')) { return false; }"><i class="fa fa-trash"></i></a>
+    </li>
+    
+    <%}%>
+    <%});%>
+</ul>
+<br><br>
+<form action="/admin/products/product-gallery/<%=id%>" method="POST" enctype="multipart/form-data" class="dropzone"
+    id="dropzoneForm">
+    <div class="fallback">
+        <input type="file" name="file" multiple>
+        <input type="submit" value="Upload">
+    </div>
+
+</form>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/basic.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.js"></script>
+<script>
+    // Preview image area
+    var loadFile = function (event) {
+        var image = document.getElementById('imgPreview');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    };
+
+    // Dropzone area
+    Dropzone.options.dropzoneForm = {
+        acceptedFiles: "image/*",
+        init: function () {
+            this.on("queuecomplete", function (file) {
+                setTimeout(function () {
+                    location.reload()
+                }, 1000);
+            })
+        }
+    }
+
+    // popup
+
+</script>
+
+
+<%- include ('../layouts/adminfooter') -%>

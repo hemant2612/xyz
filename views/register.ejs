@@ -1,0 +1,43 @@
+<%- include ('layouts/header') -%>
+
+<h1><%=title%></h1>
+<form action="/users/register" method="POST">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name "name="name" class="form-control" placeholder="name">
+        
+    </div>
+    <div class="form-group">
+        <label for="">Age</label>
+        <input type="text" name="age" class="form-control"  placeholder="age">
+        
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" class="form-control" placeholder="Email">
+        
+    </div>
+    <div class="form-group">
+        <label for="">Username</label>
+        <input type="text" name="username" class="form-control" placeholder="username">
+        
+    </div>
+    <div class="form-group">
+        <label for="password"> Password</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="password">
+        
+    </div>
+    
+    <div class="form-group">
+        <label for=""> Confirm Password</label>
+        <input type="password" name="password2" class="form-control" placeholder="Confim password">
+        
+    </div>
+
+    
+    <button type="submit" class="btn btn-default">Register</button>
+</form>
+
+
+<%- include ('layouts/footer') -%>

@@ -1,0 +1,31 @@
+<%- include ('../layouts/adminheader') -%>
+<h2>Edit a page</h2>
+<a href="/admin/pages">Back to all pages</a>
+<br><br>
+<form action="/admin/pages/update" method="POST">
+    <input type="hidden" name="id" value="<%=id%>">
+    <div class="form-group">
+        <label for="">Title</label>
+        <input type="text" name="title" value="<%=title%>" placeholder="title" required 
+        oninvalid="this.setCustomValidity(' Title must have a value')"
+        oninput="this.setCustomValidity('')" />
+        
+    </div>
+    <div class="form-group">
+        <label for="">slug</label>
+        <input type="text" name="slug" value="<%=slug%>" placeholder="slug">
+        
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="">Content</label>
+        <textarea name="content" id="" cols="30" rows="10" placeholder="content" required
+        oninvalid="this.setCustomValidity('Content must have a value')"
+        oninput="this.setCustomValidity('')"
+        ><%=content%></textarea>
+        
+    </div>
+    <button>submit</button>
+</form>
+
+<%- include ('../layouts/adminfooter') -%>

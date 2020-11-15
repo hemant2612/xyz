@@ -1,0 +1,103 @@
+<%- include ('layouts/header'); -%>
+
+<section class="section-2">
+    <!-- Let's Travel Anywhere -->
+    <span>Let's Travel Anywhere</span>
+<div class="input-box">
+    <input style="font-size:15px;" type="text" placeholder="continents by kind" role="textbox" size="6" id="inp-1" onkeyup="search()">
+    <input style="font-size:15px;" type="text" name="costs" placeholder="costs" role="textbox" size="6" id="inp-2" onkeyup="costSearch()" minlength="2" alt="pls provide two digit for result!">
+</div>
+</section>
+
+<section class="section-3">
+    <div class="container-main">
+        <%products.forEach(function(p){%>
+            
+        <div class="containerdiv" id="div-1">
+            <a href="/products/<%=p.slug%>"><img src="/products_image/<%=p._id%>/<%=p.image%>" id="img-1"></a>
+            <div class="about" id="place-name">
+                <p><%=p.title%></p>
+                <p>$</p>
+                <p><%=parseFloat(p.price).toFixed(2)%></p>
+            </div>
+        </div>
+        
+        <% }); %>
+    </div>
+</section>
+<script>
+    const search = () => {
+        let inpvalue = document.getElementById('inp-1').value.toUpperCase();
+        // console.log(inpvalue);
+        // let about=document.getElementsByClassName('about');
+        let p = document.getElementsByTagName('p');
+        for (var i = 0; i < p.length; i++) {
+            // if (i*3%3 == 0) {
+                var val = p[3*i].innerText.toUpperCase();
+                
+                if(val.indexOf(inpvalue)>-1){
+                    // console.log(val);
+                    document.getElementsByTagName('p')[3*i].parentNode.parentNode.style.display="";
+                }
+                else{
+                    var node=document.getElementsByTagName('p')[3*i];
+                    node.parentNode.parentNode.style.display="none";
+                }
+                
+
+            // }
+
+
+
+        }
+
+
+    }
+    const costSearch = () => {
+        let inpvalue = document.getElementById('inp-2').value;
+        console.log(inpvalue);
+
+        if(inpvalue!= 0){
+        num=0,count=0;
+        let p = document.getElementsByTagName('p');
+        for (var i = 0; i < p.length; i++) {
+            if ((i+1) % 2 == 0) {
+                var val = Number(p[i].innerText);
+                
+                if(val <= Number(inpvalue)){
+                    // console.log(val);
+                    document.getElementsByTagName('p')[i].parentNode.parentNode.style.display="";
+                    count++;
+                }
+                else{
+                    var node=document.getElementsByTagName('p')[i];
+                    node.parentNode.parentNode.style.display="none";
+                    num++;
+                }
+                
+
+            }
+
+
+
+        }
+        if(num !=0 && count==0){
+            document.getElementById('display').innerHTML='Soory no content !!';
+        }
+        else{
+            document.getElementById('display').innerHTML="";
+        }
+        }
+        else{
+        //     document.getElementsByClassName('about').parentNode.style.display="";
+        document.getElementById('display').innerHTML="";
+        search();
+
+        }
+
+
+
+    }
+</script>
+
+<%- include ('layouts/footer'); -%>

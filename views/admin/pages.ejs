@@ -1,0 +1,52 @@
+<%- include ('../layouts/adminheader') -%>
+<h2>Pages</h2>
+<a href="/admin/pages/addpage">Add a new Page</a>
+<br><br>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Title</td>
+            <td>Slug</td>
+            <td>Content</td>
+            <td>Edit</td>
+            <td>Delete</td>
+        </tr>
+    </thead>
+
+    <tbody>
+        <%if(pages.length>0){%>
+        <% pages.forEach(function(row){%>
+        <tr id="id_<%=row._id%>" class="<%=row.slug%>">
+            <%if(row.title == "Home"){%>
+            <td><%= row.title%></td>
+            <td><%=row.slug%></td>
+            <td><%=row.content%></td>
+            <td><a class="btn btn-primary btn-xs" href="/admin/pages/edit-page/<%=row._id%>"
+                    onclick="return confirm('Are you sure to edit it!')"><i class="fa fa-edit"></i></a></td>
+            <td><a class="confirmdeletion" class="btn btn-danger btn-xs" href="/admin/pages/delete-page/<%=row._id%>"
+                    onclick="return confirm('Are you sure to delete it!')">
+                    
+                </a></td>
+            <%}else{%>
+            <td><%= row.title%></td>
+            <td><%=row.slug%></td>
+            <td><%=row.content%></td>
+            <td><a class="btn btn-primary btn-xs" href="/admin/pages/edit-page/<%=row._id%>"
+                    onclick="return confirm('Are you sure to edit it!')"><i class="fa fa-edit"></i></a></td>
+            <td><a class="confirmdeletion" class="btn btn-danger btn-xs" href="/admin/pages/delete-page/<%=row._id%>"
+                    onclick="return confirm('Are you sure to delete it!')">
+                    <><i class="fa fa-trash"></i>
+                </a></td>
+            <%}%>
+            
+        </tr>
+        <%})}else{%>
+        <tr>
+            <td colspan="5" style="text-align: center;  background-color: rgb(255, 140, 140);">No Records Found!</td>
+        </tr>
+        <%}%>
+    </tbody>
+</table>
+<!-- <script src="/js/main.js"></script> -->
+<%- include ('../layouts/adminfooter') -%>

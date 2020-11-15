@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    
+    <link rel="stylesheet" href="/css/adminstyle.css" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+
+
+<header>
+    <div class="menu">
+        <div class="bar">
+            <div class="logo">
+                Travel
+            </div>
+            <div class="list">
+                <ul class="barlist">
+                    <li><a href="/admin/products">Products</a></li>
+                    <li><a href="/admin/pages">pages</a></li>
+                    <li><a href="/users/logout">Logout</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+</body>
+
+</html>
+<%- messages('messages',locals) %>
+<%if(errors){%>
+    <%errors.forEach(function(error){ %>
+        <div class="alert alert-danger">
+            <%=error.msg%>
+        </div>
+    <%});%>
+<%}%>

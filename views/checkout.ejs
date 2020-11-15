@@ -1,0 +1,103 @@
+<%- include ('layouts/header') -%>
+
+<%if(typeof cart != "undefined"){%>
+<h1 class="page-title">My Cart</h1>
+<br><br>
+<table class="table table-striped alignmiddle">
+    <tr>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>
+        </th>
+        <th>Subtotal</th>
+    </tr>
+    <%var total=0;%>
+    <%cart.forEach(function(p){%>
+    <% var sub=parseFloat(p.qty*p.price).toFixed(2)%>
+    <%total+=+sub%>
+    <tr>
+        <td><img class="cartimage" src="<%=p.image%>" alt=""></td>
+        <td><%=p.title%></td>
+        <td>$<%=p.price%></td>
+        <td><%=p.qty%></td>
+        <td>
+            <a href="/cart/update/<%=p.title%>?action=add">+</a>
+            <a href="/cart/update/<%=p.title%>?action=remove">-</a>
+            <a href="/cart/update/<%=p.title%>?action=clear">Clear</a>
+        </td>
+        <td>$<%=sub%></td>
+    </tr>
+
+    <%})%>
+    <tr>
+        <td colspan="6" align="right"><b>Total: </b>$<%=parseFloat(total).toFixed(2)%></td>
+    </tr>
+    <tr>
+        <td colspan="5" align="right">
+            <a class="clearCart btn btn-danger" href="/cart/clear">Clear cart</a>
+        </td>
+        <td colspan="5" align="right">
+            <a class="btn btn-primary buyNow" href="/cart/buynow">Buy now</a>
+        </td>
+    </tr>
+</table>
+
+<!--  -->
+<form class="pp" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+    <input type="hidden" name="cmd" value="_cart">
+    <input type="hidden" name="upload" value="1">
+    <input type="hidden" name="business" value="accounts@freelanceswitch.com">
+    <% var num=0;%>
+    <%cart.forEach(function(p){%>
+    <% num++ %>
+    <input type="hidden" name="item_name_<%=num%>" value="<%=p.title%>">
+    <input type="hidden" name="amount_<%=num%>" value="<%=p.price%>">
+    <input type="hidden" name="quantity_<%=num%>" value="<%=p.qty%>">
+    <%});%>
+    <!-- <input type="hidden" name="item_name" value="Donation"> -->
+    <!-- <input type="hidden" name="item_number" value="1"> -->
+    <input type="hidden" name="amount" value="total">
+    <!-- <input type="hidden" name="no_shipping" value="0"> -->
+    <!-- <input type="hidden" name="no_note" value="1"> -->
+    <input type="hidden" name="currency_code" value="USD">
+    <!-- <input type="hidden" name="lc" value="AU"> -->
+    <!-- <input type="hidden" name="bn" value="PP-BuyNowBF"> --> 
+    <!-- <input type="image" src="https://www.paypal.com/en_AU/i/btn/btn_buynow_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online."> -->
+    <input type="image" src="https://www.paypal.com/en%20US/i/btn/x-click-but01.gif " border="0" name="submit"
+        alt="PayPal - The safer, easier way to pay online.">
+    <!-- <img alt="" border="0" src="https://www.paypal.com/en_AU/i/scr/pixel.gif" width="1" height="1"> -->
+</form>
+
+<!--  -->
+
+
+<%}else{%>
+<h3 class="text-center">your cart empty</h3>
+<%}%>
+<script>
+    $(function () {
+        $('a.clearCart').on('click', function () {
+
+            if (!confirm('clear cart')) {
+                return false;
+            }
+        })
+        $('a.buyNow').on('click', function (e) {
+            e.preventDefault();
+
+            $.get('/cart/buynow', function () {
+                $('form.pp input[type=image]').click();
+                // $('.ajaxbg').show();
+                $('.ajaxbg').css('display','block');
+            });
+
+
+
+        })
+    })
+</script>
+
+
+<%- include ('layouts/footer') -%>
