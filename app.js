@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const config = require('./config/database');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var expressValidator = require('express-validator');
@@ -10,7 +9,7 @@ var multer = require('multer');
 const fileUpload=require('express-fileupload');
 const passport=require('passport')
 // connect to db 
-mongoose.connect(config.database);
+mongoose.connect('process.env.MONGODB_URL');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
@@ -145,7 +144,7 @@ app.use('/products',Products);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log("server is running..");
+  console.log("server is running..",PORT);
 });
 
 
