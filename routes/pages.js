@@ -16,6 +16,7 @@ router.get('/', (req, res) => {
                 content:"home page"
             }
         }
+        
         res.render('index', {
             title: page.title,
             content: page.content

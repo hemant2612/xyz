@@ -66,7 +66,7 @@ router.post('/register', (req, res) => {
                     username: username,
                     password: password,
                     age: age,
-                    admin: 0
+                    admin: 1
                 });
                 bcrypt.hash(user.password, 10, function (err, hash) {
                     if (err)
