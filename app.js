@@ -1,5 +1,7 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
+// const config=require('./config/database');
 const mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -8,8 +10,13 @@ var expressMessages = require('express-messages');
 var multer = require('multer');
 const fileUpload=require('express-fileupload');
 const passport=require('passport')
+require('dotenv').config({path: path.join(__dirname, '.env')});
 // connect to db 
-mongoose.connect('process.env.MONGODB_URL');
+console.log(require('dotenv').config());
+const md=process.env.MONGODB_URL
+console.log('1...',process.env.MONGODB_URL);
+console.log('md',md);
+mongoose.connect(process.env.MONGODB_URL);    
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
@@ -134,9 +141,10 @@ const addCart = require('./routes/cart.js');
 const Users = require('./routes/users.js');
 const adminPages = require('./routes/adminpages.js');
 const adminProducts = require('./routes/adminProducts.js');
+const { Console } = require('console');
 
 app.use('/admin/pages', adminPages);
-app.use('/', pages);
+app.use('/travel', pages);
 app.use('/cart',addCart);
 app.use('/users',Users);
 app.use('/admin/products', adminProducts);
