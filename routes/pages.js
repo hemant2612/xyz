@@ -10,6 +10,12 @@ router.get('/', (req, res) => {
         //     res.render('index', { title: "Home Page" });
         // }
         // else{
+        if(!page){
+            page={
+                title:"Home/",
+                content:"home page"
+            }
+        }
         res.render('index', {
             title: page.title,
             content: page.content
