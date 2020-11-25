@@ -3,10 +3,10 @@ const fs = require('fs-extra');
 const router = express.Router();
 var Product = require('../models/product'); 
 const auth =require('../config/auth');
-
+const isUser=auth.isUser;
 // GET all products
 
-router.get('/',auth.isUser,(req, res) => {
+router.get('/',isUser,(req, res) => {
     Product.find(function (err, products) {
         if (err)
             console.log(err);
@@ -25,7 +25,7 @@ router.get('/',auth.isUser,(req, res) => {
 // 
 // GET product details
 // 
-router.get('/:slug', (req, res) => {
+router.get('/:slug',isUser,(req, res) => {
     var galleryImages=null;
     var slug = req.params.slug;
     Product.findOne({ slug: slug }, function (err, product) {

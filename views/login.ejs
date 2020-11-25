@@ -1,23 +1,268 @@
 <%- include ('layouts/header') -%>
 
-<h1><%=title%></h1>
-<form action="/users/login" method="POST">
+<!-- <h1><%=title%></h1> -->
+<style>
+    .form-control {
+        width: 100%;
+    }
+    .form{
+        width: 40%;
+        border: 1px solid rgb(243, 221, 221);
+        margin: auto;
+        margin-top: 2rem;
+    }
+    /* form */
+    .form .Login {
+
+        display: block;
+        background: linear-gradient(45deg, rgb(250, 247, 58), rgb(252, 102, 15));
+        text-align: center;
+
+    }
+
+    .Login {
+        padding-top: 1rem;
+        color: white;
+        font-size: 1.5rem;
+        height: 7rem;
+    }
+
+    .form span ul {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    .form span ul li i {
+        color: white;
+        margin: 1rem;
+        margin-top: 1.5rem;
+    }
+
+
+
+    .validate-input {
+        width: 85%;
+        margin: auto;
+        position: relative;
+        border-bottom: 2px solid #adadad;
+        margin-bottom: 37px;
+        margin-top: 25px;
+    }
+
+    input {
+        border: none;
+        outline: none;
+    }
+
+    textarea {
+        outline: none;
+        border: none;
+    }
+
+    textarea:focus,
+    input:focus {
+        border-color: transparent !important;
+    }
+
+    .input100 {
+        font-family: Poppins-Regular;
+        font-size: 15px;
+        color: #555555;
+        line-height: 1.2;
+
+        display: block;
+        width: 100%;
+        height: 45px;
+        background: transparent;
+    }
+
+    .focus-input100 {
+        position: absolute;
+        display: block;
+        /* background-color: red; */
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+    }
+
+    .focus-input100::before {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        transition: all 0.4s;
+        background: #6a7dfe;
+        background: -webkit-linear-gradient(left, #21d4fd, #b721ff);
+        background: -o-linear-gradient(left, #21d4fd, #b721ff);
+        background: -moz-linear-gradient(left, #21d4fd, #b721ff);
+        background: linear-gradient(left, #21d4fd, #b721ff);
+    }
+
+    .focus-input100::after {
+        font-family: Poppins-Regular;
+        font-size: 20px;
+        /* color: #999999; */
+        color: black;
+        line-height: 1.2;
+
+        content: attr(data-placeholder);
+        display: block;
+        width: 100%;
+        position: absolute;
+
+        top: 16px;
+        left: 0;
+        padding-left: 5px;
+        /* background-color: brown; */
+        transition: all 0.4s;
+
+
+
+    }
+
+    .input100:focus+.focus-input100::after {
+        top: -15px;
+        color: rgb(65, 65, 199);
+    }
+
+    .input100:focus+.focus-input100::before {
+        width: 100%;
+    }
+
+
+    .forget {
+
+
+        margin-top: -25px;
+        margin-right: 30px;
+        /* padding: .5rem; */
+        text-align: right;
+    }
+
+    .forget span {
+        color: rgb(129, 115, 115);
+
+        display: inline-flex;
+        flex-grow: 1;
+        margin-right: -2px;
+        /* justify-content: right; */
+    }
+
+    a {
+        /* font-family: serif; */
+        display: inline-flex;
+        color: black;
+        flex-grow: 1;
+        text-decoration: none;
+        /* font-weight: 545; */
+    }
+
+    .form-btn {
+
+        position: relative;
+        margin-top: 1rem;
+    }
+
+    button {
+        background: linear-gradient(rgb(25, 183, 204), rgb(10, 152, 187));
+        font-size: 1.2rem;
+        margin: 2rem;
+        padding: .5rem 1.5rem;
+        border-radius: 25px;
+        border: 1px solid rgba(3, 16, 94, 0.3);
+        outline: none !important;
+        cursor: pointer;
+        color: white;
+    }
+
+
+    .text {
+        position: absolute;
+
+        top: 50%;
+        transform: translateY(-50%);
+        right: 20px;
+        margin-right: 10px;
+        display: flex;
+        /* flex-grow: 1; */
+        /* flex-wrap: wrap; */
+    }
+
+    .text .txt1 {
+        display: inline-flex;
+        flex-grow: 1;
+        color: rgb(129, 115, 115);
+    }
+
+    .text .txt2 {
+        display: inline-flex;
+        flex-grow: 1;
+    }
     
+</style>
 
+<form action="/users/login" method="POST">
+    <div class="form template">
+        <span class="Login">
+            Log in
 
-    <div class="form-group">
+            <ul>
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-google"></i></a></li>
+            </ul>
+        </span>
+        <div class="form-group validate-input">
+            <input class="input100" type="text" name="username">
+            <span class="focus-input100" data-placeholder="Username"></span>
+        </div>
+        <div class="form-group validate-input">
+            <input class="input100" type="text" name="password">
+            <span class="focus-input100" data-placeholder="Password"></span>
+        </div>
+        <div class="forget">
+            <span class="forget">forgot</span>
+            <a href="#">:Password?</a>
+        </div>
+        <div class="form-btn">
+
+            
+            <button type="submit" style="border-radius: 30px;" class="login-form-btn">
+                Login
+            </button>
+            <div class="text">
+                <span class="txt1">
+                    Don’t have an account?
+                </span>
+
+                <a class="txt2" href="/users/register">
+                    Sign Up
+                </a>
+            </div>
+
+        </div>
+        <!-- <div class="form-group">
         <label for="">Username</label>
-        <input type="text" name="username" class="form-control" placeholder="username">
+        <input type="text" name="username" class="form-control"  placeholder="username">
         
     </div>
     <div class="form-group">
         <label for=""> Password</label>
         <input type="password" name="password" class="form-control" placeholder="password">
         
-    </div>
+    </div> -->
 
-    
-    <button type="submit" class="btn btn-default">Login</button>
+
+        <!-- <button type="submit" class="btn btn-default">Login</button> -->
+    </div>
 </form>
 
 

@@ -6,17 +6,11 @@ router.get('/', (req, res) => {
     Page.findOne({ slug: "home" }, function (err, page) {
         if (err)
             console.log(err);
+        
         // if(!page){
-        //     res.render('index', { title: "Home Page" });
+        //     res.render('index',{title:"Home page"});
         // }
         // else{
-        if(!page){
-            page={
-                title:"Home/",
-                content:"home page"
-            }
-        }
-        
         res.render('index', {
             title: page.title,
             content: page.content
@@ -34,10 +28,10 @@ router.get('/:slug', (req, res) => {
         if (err)
             console.log(err);
         if (!page) {
-            res.redirect('/');
+            res.redirect('/travel');
         }
         else {
-            res.render('index', {
+            res.render('page_details', {
                 title: page.title,
                 content: page.content
             });

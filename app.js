@@ -8,20 +8,18 @@ var session = require('express-session');
 var expressValidator = require('express-validator');
 var expressMessages = require('express-messages');
 var multer = require('multer');
-const fileUpload=require('express-fileupload');
-const passport=require('passport')
-require('dotenv').config({path: path.join(__dirname, '.env')});
+const fileUpload = require('express-fileupload');
+const passport = require('passport')
+const User=require('./models/user');
+// require('dotenv').config({path: path.join(__dirname, '.env')});
 // connect to db 
-console.log(require('dotenv').config());
-const md=process.env.MONGODB_URL
-console.log('1...',process.env.MONGODB_URL);
-console.log('md',md);
-mongoose.connect(process.env.MONGODB_URL);    
+
+mongoose.connect(process.env.MONGODB_URL);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
   console.log('database running');
-  
+
 });
 // init app
 const app = express();
@@ -35,19 +33,19 @@ app.set('view engine', 'ejs');
 // set public folder
 app.use(express.static(path.join(__dirname + '/public')));
 // set globaly variable****************
-app.locals.errors = null; 
+app.locals.errors = null;
 ////////////
 // {{{ GET Page model and shows on header.ejs
-const Page=require('./models/page')
+const Page = require('./models/page')
 
 // GET all pages to show on header.js
 Page.find({}).exec((err, pages) => {
-        if(err){
-          console.log(err);
-        }
-        else{
-          app.locals.pages=pages;
-        }
+  if (err) {
+    console.log(err);
+  }
+  else {
+    app.locals.pages = pages;
+  }
 })
 // }}}
 
@@ -103,12 +101,35 @@ app.use(expressValidator({
           return '.png';
         case '':
           return '.jpg';
-          default:
-            return false;
+        default:
+          return false;
       }
-    }
+    },
+    isEmailExists: function (email,id) {
+      if (email) {
+        User.count({ _id: { '$ne': id }, email: email }, function (err, result) {
+          if (err) {
+            return false;
+          }
+          if (result) {
+            console.log(result);
+            return false;
+          } else {
+            return true;
+          }
+
+        });
+      }
+      else{
+        return true;
+      }
+
+    },
   }
-}));
+
+
+
+  }));
 
 
 // express message middleware
@@ -122,37 +143,37 @@ app.use(function (req, res, next) {
 require('./config/passport')(passport);
 // passport Middleware
 app.use(passport.initialize());
-app.use(passport.session()); 
+app.use(passport.session());
 
 // to available every where
-app.get('*',function(req,res,next){
+app.get('*', function (req, res, next) {
   // console.log('req'+req);
   // console.log(req.session);
-  res.locals.user=req.user || null;
-  res.locals.cart=req.session.cart;
-  
+  res.locals.user = req.user || null;
+  res.locals.cart = req.session.cart;
+
   next();
 })
 
 // SET routes
-const Products=require('./routes/products.js');
+const Products = require('./routes/products.js');
 const pages = require('./routes/pages.js');
 const addCart = require('./routes/cart.js');
 const Users = require('./routes/users.js');
 const adminPages = require('./routes/adminpages.js');
 const adminProducts = require('./routes/adminProducts.js');
-const { Console } = require('console');
+
 
 app.use('/admin/pages', adminPages);
 app.use('/travel', pages);
-app.use('/cart',addCart);
-app.use('/users',Users);
+app.use('/cart', addCart);
+app.use('/users', Users);
 app.use('/admin/products', adminProducts);
-app.use('/products',Products); 
+app.use('/products', Products);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log("server is running..",PORT);
+  console.log("server is running..", PORT);
 });
 
 

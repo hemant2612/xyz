@@ -14,11 +14,7 @@ const userSchema=mongoose.Schema({
         required:true,
         trim:true,
         lowercase:true,
-        validate(value){
-            if(!validator.isEmail(value)){
-                throw new Error('Email is invalid.')
-            }
-        }
+        
     },
     username:{
         type:String,
@@ -48,5 +44,21 @@ const userSchema=mongoose.Schema({
         type:Number
     }
     
-})
+});
+// validation
+function isEmailExists(email) {
+    if (email) {
+        User.count({ _id: { '$ne': this._id }, email: email }, function (err, result) {
+            if (err) {
+                console.log('err',err);
+                return err;
+            }
+            console.log('result',result);
+            console.log('result',!result);
+            return !result;
+        })
+    }
+}
+
+
 const User=module.exports=mongoose.model('users',userSchema)

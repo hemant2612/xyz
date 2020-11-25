@@ -1,6 +1,27 @@
 <%- include ('layouts/header') -%>
 
 <h1><%=title%></h1>
+<style>
+    .form-group{
+        width: 100%;
+        
+        /* margin: auto; */
+    }
+    form{
+        width: 60%;
+        box-shadow:  15px 15px 40px #eee9e9, 
+             -15px -15px 40px #f3efef;
+        margin: auto;
+        background-color:  #f3efef;
+        
+    }
+    h1{
+        margin-left: 5rem;
+        font-weight: bold;
+        letter-spacing: .1rem;
+    }
+
+</style>
 <form action="/users/register" method="POST">
     <div class="form-group">
         <label for="name">Name</label>

@@ -1,42 +1,5 @@
-<%- include ('layouts/copyheader'); -%>
 
-
-
-
-<section class="section-2">
-    <!-- Let's Travel Anywhere -->
-    <span class="main-heading">Let's Travel Anywhere</span>
-    <div class="inputFeild">
-        <input style="font-size:15px;" type="text" placeholder="continents by kind" role="textbox" size="6" id="inp1"
-            onkeyup="searchByFeild()">
-        <input style="font-size:15px;" type="number" placeholder="costs"  size="6" id="inp2"
-            onkeyup="SearchByCosts()" minlength="2">
-    </div>
-</section>
-
-<section class="section-3">
-
-    <div class="mainBlock">
-        <div class="result" id="display"></div>
-        <%products.forEach(function(p){%>
-
-        <div class="underBlock" id="div-1">
-            <a href="/products/<%=p.slug%>"><img src="/products_image/<%=p._id%>/<%=p.image%>" id="img-1"></a>
-            <div class="aboutPage" id="place-name">
-                <p><%=p.title%></p>
-                <p>$</p>
-                <p><%=parseFloat(p.price).toFixed(2)%></p>
-            </div>
-        </div>
-
-        <% }); %>
-    </div>
-
-</section>
-
-
-<script>
-    const searchByFeild = () => {
+const searchByFeild = () => {
     let inp1 = document.getElementById('inp1').value.toUpperCase();
     console.log(inp1);
     // let about=document.getElementsByClassName('about');
@@ -58,7 +21,11 @@
         }
         else {
             document.getElementsByTagName('p')[3 * i].parentNode.parentNode.style.display= "none";
-            
+            // console.log('parent',node.parentNode);
+            // console.log('parent',node.parentNode.parentNode);
+            // if(document.getElementsByTagName('p')[3 * i] !== undefined){
+                // node.parentNode.parentNode.style.display = "none";
+            // }
             
         }
         var html=document.querySelector("html");
@@ -103,7 +70,7 @@ const SearchByCosts = () => {
 
         }
         if (num != 0 && count == 0) {
-            document.getElementById('display').innerHTML = 'Sorry no content yet!!';
+            document.getElementById('display').innerHTML = 'Soory no content !!';
         }
         else {
             document.getElementById('display').innerHTML = "";
@@ -119,4 +86,3 @@ const SearchByCosts = () => {
 
 
 }
-</script>

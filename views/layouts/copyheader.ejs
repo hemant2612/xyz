@@ -1,8 +1,13 @@
 <html>
-
+<style>
+.open{
+    display: none;
+    pointer-events: none;
+}
+</style>
 <head>
     <title><%=title%></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.css" />
     <link rel="stylesheet" href="/css/style.css" type="text/css">
@@ -17,11 +22,11 @@
 <body>
     <div class="ajaxbg">
         <div class="ajaxinner">
-            <h3>youare now redirect to paypal.....</h3> 
+            <h3>youare now redirect to paypal.....</h3>
             <img src="/images/download.png" alt="">
         </div>
     </div>
-    
+
     <nav class="navbar navbar-expand-sm navbar-dark bg-teal">
         <div class="container">
             <a href="/travel" class="navbar-brand">
@@ -34,13 +39,13 @@
                 <ul class="navbar-nav ml-auto nav-left">
                     <%pages.forEach(function(page){%>
                     <%if(page.slug == "home"){%>
-                    <li class="nav-item px-3"><a class="nav-link" href="/travel"><%=page.title%></a></li>
+                    <li class="nav-item px-3"><a class="nav-link" href="/products"><%=page.title%></a></li>
                     <%}else{%>
 
                     <li class="nav-item px-3"><a class="nav-link" href="/travel/<%=page.slug%>"><%=page.title%></a></li>
                     <%}%>
                         <%})%>
-                    
+
                 </ul>
                 <ul class="navbar-nav ml-auto nav-right" id="travel-navbar">
                     <li class="nav-item px-3">
@@ -53,28 +58,61 @@
                             </a>
                         </li>
                         <%if(user){%>
-                    <li class="nav-item px-3"><a class="nav-link" href="/users/logout">Hi, <%=user.username%> (logout)</a></li>
-                    <!-- <li class="nav-item px-3"><a class="nav-link" href="/users/me">delete</a></li> -->
+                    <li class="nav-item px-3"><a class="nav-link" href="/users/logout">Hi, <%=user.username%>
+                            (logout)</a></li>
+                    <!-- <li class="nav-item px-3"><a class="nav-link" href="/users/me/<%=user.id%>">delete</a></li> -->
                     <%}else{%>
                     <li class="nav-item px-3"><a class="nav-link" href="/users/register">Register</a></li>
                     <li class="nav-item px-3"><a class="nav-link" href="/users/login">Login</a></li>
+
                     <%}%>
                             <%if(user && user.admin==1){%>
                     <li class="nav-item px-3"><a class="nav-link" href="/admin/pages">Admin area</a></li>
+
                     <%}%>
                 </ul>
             </div>
         </div>
     </nav>
+    <div class="full" id="fixScreen"></div>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="javascript:void(0)" class="username" onclick="closeNav()"><%=user.username%></a>
+        <a href="/users/account/details/<%=user.id%>">Account details</a>
+        <a href="#">Purchase History</a>
+        <a href="#">My Account</a>
+        <a href="#">Help me</a>
+    </div>
+
+
+    <!-- Use any element to open the sidenav -->
+    <span onclick="openNav()" class="open"></span>
+    <script>
+        /* Set the width of the side navigation to 250px */
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            const fix = document.getElementById('fixScreen');
+
+            fix.style.display = "block";
+        }
+
+        /* Set the width of the side navigation to 0 */
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            const fix = document.getElementById('fixScreen');
+            //  
+            fix.style.display = "none";
+        }
+    </script>
 
 </body>
 
 </html>
 <%- messages('messages', locals) %>
-<%if(errors){%>
-    <%errors.forEach(function(error){ %>
-        <div class="alert alert-danger">
-            <%=error.msg%>
-        </div>
-    <%});%>
-<%}%>
+                    <%if(errors){%>
+                    <%errors.forEach(function(error){ %>
+                    <div class="alert alert-danger">
+                        <%=error.msg%>
+                    </div>
+                    <%});%>
+                    <%}%>
