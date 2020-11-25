@@ -7,15 +7,15 @@ router.get('/', (req, res) => {
         if (err)
             console.log(err);
         
-        // if(!page){
-        //     res.render('index',{title:"Home page"});
-        // }
-        // else{
+        if(!page){
+            res.render('index',{title:"Home page"});
+        }
+        else{
         res.render('index', {
             title: page.title,
             content: page.content
         });
-        // }
+        }
 
     })
     
