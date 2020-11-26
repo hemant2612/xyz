@@ -58,7 +58,7 @@ app.use(fileUpload({ safeFileNames: true, preserveExtension: true }));
 // body parser miidleware
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json())
@@ -105,24 +105,17 @@ app.use(expressValidator({
           return false;
       }
     },
-    isEmailExists: function (email,id) {
+    isExists: function (email) {
       if (email) {
-        User.count({ _id: { '$ne': id }, email: email }, function (err, result) {
+        User.findOne({email:email}, function (err, result) {
           if (err) {
             return false;
           }
-          if (result) {
-            console.log(result);
-            return false;
-          } else {
-            return true;
-          }
+          return !result;
 
         });
       }
-      else{
-        return true;
-      }
+      
 
     },
   }

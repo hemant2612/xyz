@@ -1,12 +1,13 @@
 const express = require('express');
 const fs = require('fs-extra');
 var User = require('../models/user');
+const { check } = require('express-validator/check');
 // const validator = require('validator');
-// const { body, validationResult } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const { sendEmail, sendCancelEmail } = require('../email/account');
-// const { delete } = require('./products');
+
 // const jwt=require('jsonwebtoken');
 const router = express.Router();
 // GET register
@@ -27,27 +28,27 @@ router.post('/register', (req, res) => {
     var password2 = req.body.password2;
     var age = req.body.age;
     req.checkBody('name', 'Name is required!').notEmpty();
-    if(email){
 
-        const mail=req.checkBody('email', 'Email is not valid').isEmail();
-        console.log('mail',mail);
-        console.log('boolean',mail.isBoolean);
-        if(mail){
-            req.checkBody('email', 'Email already in use!').isEmailExists(email,req.body.id);
-        }
-    }else{
+    if(email == ''){
         req.checkBody('email', 'Email is required!').notEmpty();
     }
+    else{
+        req.checkBody('email', 'Email is not valid').isEmail();
+    }
+
     
+
+
     req.checkBody('username', 'Username is required!').notEmpty();
     req.checkBody('password', 'Password is required!').notEmpty();
     req.checkBody('password2', 'Confirm password is not match!').equals(password);
-    
-// ///////////////////////////////
+    // req.checkBody('email', 'Email already in use!').isExists(email);
+
+    // ///////////////////////////////
 
 
 
-///////////////////////////// 
+    ///////////////////////////// 
     if (age == '') {
         req.checkBody('age', 'Age is required!').notEmpty();
     }
@@ -152,17 +153,17 @@ router.get('/me/:id', function (req, res) {
 
 
 // ACCOUnt details
-router.get('/account/details/:id',function(req,res){
-    User.findOne({id:req.params.id},function(err,user){
-        if(err){
+router.get('/account/details/:id', function (req, res) {
+    User.findOne({ id: req.params.id }, function (err, user) {
+        if (err) {
             console.log(err);
         }
-        res.render('account',{
-            user:user,
-            title:'Account'
+        res.render('account', {
+            user: user,
+            title: 'Account'
         });
     })
-    
+
 });
 
 module.exports = router;
